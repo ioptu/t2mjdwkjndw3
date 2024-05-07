@@ -2,7 +2,7 @@ var fs = require('fs')
 
 const regex = /group-title="CCTV-Live"/;
 
-fs.readFile('old.m3u', 'utf8' , (err, data) => {
+fs.readFile('output.m3u', 'utf8' , (err, data) => {
   if (err) {
     console.error(err);
     return;
@@ -20,7 +20,7 @@ fs.readFile('old.m3u', 'utf8' , (err, data) => {
   let resultText = filteredArray.join('\n');
 
   // Write to new file
-  fs.writeFile('new.m3u', resultText, function (err) {
+  fs.writeFile('modop.m3u', resultText, function (err) {
     if (err) return console.log(err);
     console.log('File operation is successful.');
   });
