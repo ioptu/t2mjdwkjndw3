@@ -20,6 +20,8 @@ jobs:
         git clone https://github.com/ioptu/t2mjdwkjndw3.git
         cd t2mjdwkjndw3 && git init
         mv ../output.m3u ./
+        node modifyoutput.js
+        echo -e "#EXTM3U x-tvg-url=\"https://live.fanmingming.com/e.xml\"\n$(cat modop.m3u)" > modop.m3u
         git config --global user.email "github@github.com"
         git config --global user.name "Github Actions"
         git add .
