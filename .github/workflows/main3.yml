@@ -1,4 +1,4 @@
-name: modify
+name: modifyoutput
 on: 
   schedule: 
     - cron: 56 2 * * *
