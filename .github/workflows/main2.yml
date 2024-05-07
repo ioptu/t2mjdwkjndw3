@@ -1,0 +1,28 @@
+name: modify
+on: 
+  schedule: 
+    - cron: 56 22 * * *
+  workflow_dispatch:
+jobs:
+  main:
+    name: Fetch And Modify
+    runs-on: ubuntu-latest
+    steps: 
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: fetch source 
+      run: |
+          wget https://github.com/fanmingming/live/raw/main/tv/m3u/ipv6.m3u -O old.m3u
+          node modify.js
+          ls -al
+    - name: CommitAndPush
+      run: |
+        git clone https://github.com/ioptu/t2mjdwkjndw3.git
+        cd t2mjdwkjndw3 && git init
+        mv ../new.m3u ./fmms.m3u
+        git config --global user.email "github@github.com"
+        git config --global user.name "Github Actions"
+        git add .
+        git commit -m "Build By Github Actions"
+        git remote set-url origin https://${{ secrets.TOKEN }}@github.com/ioptu/t2mjdwkjndw3.git
+        git push -u origin main
