@@ -109,8 +109,6 @@ http://178.157.60.73/proxy/344811278/344811278.m3u8
 http://178.157.60.73/proxy/917851306/917851306.m3u8
 #EXTINF:-1 tvg-name="宁夏卫视" tvg-logo="https://live.fanmingming.com/tv/宁夏卫视.png" group-title="CCTV-Live",宁夏卫视
 http://178.157.60.73/proxy/1558349983/1558349983.m3u8
-#EXTINF:-1 tvg-name="三沙卫视" tvg-logo="https://live.fanmingming.com/tv/三沙卫视.png" group-title="CCTV-Live",三沙卫视
-http://178.157.60.73/proxy/1337100319/1337100319.m3u8
 #EXTINF:-1 tvg-name="青海卫视" tvg-logo="https://live.fanmingming.com/tv/青海卫视.png" group-title="CCTV-Live",青海卫视
 http://178.157.60.73/proxy/1152127449/1152127449.m3u8
 #EXTINF:-1 tvg-name="吉林卫视" tvg-logo="https://live.fanmingming.com/tv/吉林卫视.png" group-title="CCTV-Live",吉林卫视
