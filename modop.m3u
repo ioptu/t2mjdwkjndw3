@@ -5,6 +5,8 @@ http://178.157.60.73/proxy/679257699/679257699.m3u8
 http://178.157.60.73/proxy/753065176/753065176.m3u8
 #EXTINF:-1 tvg-name="CCTV2" tvg-logo="https://live.fanmingming.com/tv/CCTV2.png" group-title="CCTV-Live",CCTV-2
 http://178.157.60.73/proxy/1231349557/1231349557.m3u8
+#EXTINF:-1 tvg-name="CCTV3" tvg-logo="https://live.fanmingming.com/tv/CCTV3.png" group-title="CCTV-Live",CCTV-3
+http://178.157.60.73/proxy/781829366/781829366.m3u8
 #EXTINF:-1 tvg-name="CCTV4" tvg-logo="https://live.fanmingming.com/tv/CCTV4.png" group-title="CCTV-Live",CCTV-4
 http://178.157.60.73/proxy/2065759974/2065759974.m3u8
 #EXTINF:-1 tvg-name="CCTV5" tvg-logo="https://live.fanmingming.com/tv/CCTV5.png" group-title="CCTV-Live",CCTV-5
@@ -39,6 +41,10 @@ http://178.157.60.73/proxy/434481154/434481154.m3u8
 http://178.157.60.73/proxy/2004643460/2004643460.m3u8
 #EXTINF:-1 tvg-name="咪咕体育" tvg-logo="https://live.fanmingming.com/tv/咪咕体育.png" group-title="CCTV-Live",咪咕体育
 http://178.157.60.73/proxy/1168525477/1168525477.m3u8
+#EXTINF:-1 tvg-name="凤凰卫视" tvg-logo="https://live.fanmingming.com/tv/凤凰卫视.png" group-title="CCTV-Live",凤凰卫视
+http://178.157.60.73/proxy/1650326537/1650326537.m3u8
+#EXTINF:-1 tvg-name="凤凰中文" tvg-logo="https://live.fanmingming.com/tv/凤凰中文.png" group-title="CCTV-Live",凤凰中文
+http://178.157.60.73/proxy/1846789161/1846789161.m3u8
 #EXTINF:-1 tvg-name="北京卫视" tvg-logo="https://live.fanmingming.com/tv/北京卫视.png" group-title="CCTV-Live",北京卫视
 http://178.157.60.73/proxy/469197887/469197887.m3u8
 #EXTINF:-1 tvg-name="江苏卫视" tvg-logo="https://live.fanmingming.com/tv/江苏卫视.png" group-title="CCTV-Live",江苏卫视
