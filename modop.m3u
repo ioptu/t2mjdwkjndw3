@@ -5,8 +5,6 @@ http://178.157.60.73/proxy/679257699/679257699.m3u8
 http://178.157.60.73/proxy/753065176/753065176.m3u8
 #EXTINF:-1 tvg-name="CCTV2" tvg-logo="https://live.fanmingming.com/tv/CCTV2.png" group-title="CCTV-Live",CCTV-2
 http://178.157.60.73/proxy/1231349557/1231349557.m3u8
-#EXTINF:-1 tvg-name="CCTV3" tvg-logo="https://live.fanmingming.com/tv/CCTV3.png" group-title="CCTV-Live",CCTV-3
-http://178.157.60.73/proxy/781829366/781829366.m3u8
 #EXTINF:-1 tvg-name="CCTV4" tvg-logo="https://live.fanmingming.com/tv/CCTV4.png" group-title="CCTV-Live",CCTV-4
 http://178.157.60.73/proxy/2065759974/2065759974.m3u8
 #EXTINF:-1 tvg-name="CCTV5" tvg-logo="https://live.fanmingming.com/tv/CCTV5.png" group-title="CCTV-Live",CCTV-5
@@ -19,8 +17,6 @@ http://178.157.60.73/proxy/1275265590/1275265590.m3u8
 http://178.157.60.73/proxy/1747360543/1747360543.m3u8
 #EXTINF:-1 tvg-name="CCTV7" tvg-logo="https://live.fanmingming.com/tv/CCTV7.png" group-title="CCTV-Live",CCTV-7
 http://178.157.60.73/proxy/1797993240/1797993240.m3u8
-#EXTINF:-1 tvg-name="CCTV8" tvg-logo="https://live.fanmingming.com/tv/CCTV8.png" group-title="CCTV-Live",CCTV-8
-http://178.157.60.73/proxy/366510833/366510833.m3u8
 #EXTINF:-1 tvg-name="CCTV9" tvg-logo="https://live.fanmingming.com/tv/CCTV9.png" group-title="CCTV-Live",CCTV-9
 http://178.157.60.73/proxy/41408178/41408178.m3u8
 #EXTINF:-1 tvg-name="CCTV10" tvg-logo="https://live.fanmingming.com/tv/CCTV10.png" group-title="CCTV-Live",CCTV-10
