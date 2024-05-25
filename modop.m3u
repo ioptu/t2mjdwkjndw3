@@ -39,8 +39,6 @@ http://178.157.60.73/proxy/518544399/518544399.m3u8
 http://178.157.60.73/proxy/1213181202/1213181202.m3u8
 #EXTINF:-1 tvg-name="CCTV17" tvg-logo="https://live.fanmingming.com/tv/CCTV17.png" group-title="CCTV-Live",CCTV-17
 http://178.157.60.73/proxy/642661480/642661480.m3u8
-#EXTINF:-1 tvg-name="咪咕体育" tvg-logo="https://live.fanmingming.com/tv/咪咕体育.png" group-title="CCTV-Live",咪咕体育
-http://178.157.60.73/proxy/1168525477/1168525477.m3u8
 #EXTINF:-1 tvg-name="凤凰卫视" tvg-logo="https://live.fanmingming.com/tv/凤凰卫视.png" group-title="CCTV-Live",凤凰卫视
 http://178.157.60.73/proxy/1650326537/1650326537.m3u8
 #EXTINF:-1 tvg-name="凤凰卫视" tvg-logo="https://live.fanmingming.com/tv/凤凰卫视.png" group-title="CCTV-Live",凤凰卫视
@@ -91,8 +89,6 @@ http://178.157.60.73/proxy/1817490980/1817490980.m3u8
 http://178.157.60.73/proxy/1385861493/1385861493.m3u8
 #EXTINF:-1 tvg-name="山东卫视" tvg-logo="https://live.fanmingming.com/tv/山东卫视.png" group-title="CCTV-Live",山东卫视
 http://178.157.60.73/proxy/1763730718/1763730718.m3u8
-#EXTINF:-1 tvg-name="新疆卫视" tvg-logo="https://live.fanmingming.com/tv/新疆卫视.png" group-title="CCTV-Live",新疆卫视
-http://178.157.60.73/proxy/1423426614/1423426614.m3u8
 #EXTINF:-1 tvg-name="新疆兵团卫视" tvg-logo="https://live.fanmingming.com/tv/新疆兵团卫视.png" group-title="CCTV-Live",新疆兵团卫视
 http://178.157.60.73/proxy/1502802665/1502802665.m3u8
 #EXTINF:-1 tvg-name="云南卫视" tvg-logo="https://live.fanmingming.com/tv/云南卫视.png" group-title="CCTV-Live",云南卫视
