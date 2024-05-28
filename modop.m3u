@@ -1,8 +1,12 @@
 #EXTM3U x-tvg-url="https://live.fanmingming.com/e.xml"
 #EXTINF:-1 tvg-name="CCTV4" tvg-logo="https://live.fanmingming.com/tv/CCTV4.png" group-title="CCTV-Live",CCTV-4k
 http://frp-fly.top:27209/proxy/968404657/968404657.m3u8
+#EXTINF:-1 tvg-name="CCTV4" tvg-logo="https://live.fanmingming.com/tv/CCTV4.png" group-title="CCTV-Live",CCTV-4k
+http://frp.freefrp.net:39619/proxy/968404657/968404657.m3u8
 #EXTINF:-1 tvg-name="CCTV1" tvg-logo="https://live.fanmingming.com/tv/CCTV1.png" group-title="CCTV-Live",CCTV-1
 http://frp-fly.top:27209/proxy/1964731068/1964731068.m3u8
+#EXTINF:-1 tvg-name="CCTV1" tvg-logo="https://live.fanmingming.com/tv/CCTV1.png" group-title="CCTV-Live",CCTV-1
+http://frp.freefrp.net:39619/proxy/1964731068/1964731068.m3u8
 #EXTINF:-1 tvg-name="CCTV2" tvg-logo="https://live.fanmingming.com/tv/CCTV2.png" group-title="CCTV-Live",CCTV-2
 http://frp-fly.top:27209/proxy/1486446687/1486446687.m3u8
 #EXTINF:-1 tvg-name="CCTV3" tvg-logo="https://live.fanmingming.com/tv/CCTV3.png" group-title="CCTV-Live",CCTV-3
@@ -111,6 +115,8 @@ http://frp-fly.top:27209/proxy/2019508840/2019508840.m3u8
 http://frp-fly.top:27209/proxy/344811278/344811278.m3u8
 #EXTINF:-1 tvg-name="陕西卫视" tvg-logo="https://live.fanmingming.com/tv/陕西卫视.png" group-title="CCTV-Live",陕西卫视
 http://frp-fly.top:27209/proxy/917851306/917851306.m3u8
+#EXTINF:-1 tvg-name="宁夏卫视" tvg-logo="https://live.fanmingming.com/tv/宁夏卫视.png" group-title="CCTV-Live",宁夏卫视
+http://frp-fly.top:27209/proxy/1558349983/1558349983.m3u8
 #EXTINF:-1 tvg-name="三沙卫视" tvg-logo="https://live.fanmingming.com/tv/三沙卫视.png" group-title="CCTV-Live",三沙卫视
 http://frp-fly.top:27209/proxy/1337100319/1337100319.m3u8
 #EXTINF:-1 tvg-name="青海卫视" tvg-logo="https://live.fanmingming.com/tv/青海卫视.png" group-title="CCTV-Live",青海卫视
