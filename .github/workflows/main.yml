@@ -1,7 +1,7 @@
 name: t2m
 on: 
   schedule: 
-    - cron: 56 12 * * *
+    - cron: 04 06 * * *
   workflow_dispatch:
 jobs:
   main:
