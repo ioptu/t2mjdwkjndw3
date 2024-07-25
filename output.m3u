@@ -355,6 +355,8 @@ http://159.75.85.63:8654/xx8k50fps.php
 http://liveshowbak2.kan0512.com/ksz-norecord/csztv4k_4k.m3u8
 #EXTINF:-1 tvg-name="CCTV4K-25P-HLG源" tvg-logo="https://live.fanmingming.com/tv/CCTV4K-25P-HLG源.png" group-title="肥羊",CCTV4K-25P-HLG源
 http://159.75.85.63:5679/cctv4k.php
+#EXTINF:-1 tvg-name="CCTV4K-25P-SDR源" tvg-logo="https://live.fanmingming.com/tv/CCTV4K-25P-SDR源.png" group-title="肥羊",CCTV4K-25P-SDR源
+https://live.goodiptv.club/api/cqyx.php?id=CCTV4K
 #EXTINF:-1 tvg-name="CCTV16-4K25P-SDR源" tvg-logo="https://live.fanmingming.com/tv/CCTV16-4K25P-SDR源.png" group-title="肥羊",CCTV16-4K25P-SDR源
 https://live.goodiptv.club/api/cqyx.php?id=CCTV16_4K
 #EXTINF:-1 tvg-name="CCTV16-4K-25PHLG源" tvg-logo="https://live.fanmingming.com/tv/CCTV16-4K-25PHLG源.png" group-title="肥羊",CCTV16-4K-25PHLG源
@@ -575,8 +577,12 @@ https://live.goodiptv.club/api/bestv.php?id=mlyyhd8m/8000000
 http://hpull.kktv8.com/livekktv/128600025/playlist.m3u8
 #EXTINF:-1 tvg-name="足球频道" tvg-logo="https://live.fanmingming.com/tv/足球频道.png" group-title="精品",足球频道
 https://nmglive.imfc.cn/5n1r1c/182396.m3u8
+#EXTINF:-1 tvg-name="NewTV军旅剧场" tvg-logo="https://live.fanmingming.com/tv/NewTV军旅剧场.png" group-title="NewTV",NewTV军旅剧场
+http://gslbserv.itv.cmvideo.cn:80/000000001000/7485075951068666323/1.m3u8?channel-id=ystenlive&Contentid=7485075951068666323&livemode=1&stbId=003901FF0001181003FC08A5C8C6C037&userToken=85a5a98cdcab4d800a8ec29a9d917e8d10vv&usergroup=g10045200000&version=1.0&owaccmark=7485075951068666323&owchid=ystenlive&owsid=7951969344461285239
 #EXTINF:-1 tvg-name="NewTV明星大片" tvg-logo="https://live.fanmingming.com/tv/NewTV明星大片.png" group-title="NewTV",NewTV明星大片
 http://gslbserv.itv.cmvideo.cn:80/000000001000/5595720619887440144/1.m3u8?channel-id=ystenlive&Contentid=5595720619887440144&livemode=1&stbId=003901FF0001181003FC08A5C8C6C037&userToken=85a5a98cdcab4d800a8ec29a9d917e8d10vv&usergroup=g10045200000&version=1.0&owaccmark=5595720619887440144&owchid=ystenlive&owsid=7951969344461437044
+#EXTINF:-1 tvg-name="黑莓电影" tvg-logo="https://live.fanmingming.com/tv/黑莓电影.png" group-title="NewTV",黑莓电影
+http://gslbserv.itv.cmvideo.cn:80/000000001000/8785669936177902664/1.m3u8?channel-id=ystenlive&Contentid=8785669936177902664&livemode=1&stbId=003901FF0001181003FC08A5C8C6C037&userToken=85a5a98cdcab4d800a8ec29a9d917e8d10vv&usergroup=g10045200000&version=1.0&owaccmark=8785669936177902664&owchid=ystenlive&owsid=7951969344461621383
 #EXTINF:-1 tvg-name="吉林影视" tvg-logo="https://live.fanmingming.com/tv/吉林影视.png" group-title="地方",吉林影视
 http://stream1.jlntv.cn/yspd/sd/live.m3u8
 #EXTINF:-1 tvg-name="吉林乡村" tvg-logo="https://live.fanmingming.com/tv/吉林乡村.png" group-title="地方",吉林乡村
@@ -767,6 +773,8 @@ http://cdn8.live247stream.com/canadaone/tv/playlist.m3u8
 https://insighttv-samsung-canada.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-name="Inwonder" tvg-logo="https://live.fanmingming.com/tv/Inwonder.png" group-title="世界",Inwonder
 https://inwonder-samsung-canada.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-name="Astrakhan24(Opt-2)" tvg-logo="https://live.fanmingming.com/tv/Astrakhan24(Opt-2).png" group-title="世界",Astrakhan24(Opt-2)
+http://streaming.astrakhan.ru/astrakhan24/index.m3u8
 #EXTINF:-1 tvg-name="UniverTV" tvg-logo="https://live.fanmingming.com/tv/UniverTV.png" group-title="世界",UniverTV
 http://cdn.universmotri.ru/live/hq.sdp/chunklist_w1792531.m3u8
 #EXTINF:-1 tvg-name="伊拉克-SharqiyaNews" tvg-logo="https://live.fanmingming.com/tv/伊拉克-SharqiyaNews.png" group-title="世界",伊拉克-SharqiyaNews
@@ -2363,6 +2371,10 @@ http://[2409:8087:4c0a:22:1::11]:6410/170000001115/UmaiCHAN6380763222d00/index.m
 http://[2409:8087:4c0a:22:1::11]:6410/170000001115/UmaiCHAN63807601b19dd/index.m3u8?AuthInfo=9kOOdBn7MFF0.0000002bWjKgahUTrwI
 #EXTINF:-1 tvg-name="CHC高清电影" tvg-logo="https://live.fanmingming.com/tv/CHC高清电影.png" group-title="电影",CHC高清电影
 http://[2409:8087:4c0a:22:1::11]:6410/170000001115/UmaiCHAN6380764b172c9/index.m3u8?AuthInfo=9kOOdBn7MFF0.0000002bWjKgahUTrwI
+#EXTINF:-1 tvg-name="古装剧" tvg-logo="https://live.fanmingming.com/tv/古装剧.png" group-title="电视剧",古装剧
+http://maomao.kandiantv.cn/douyu1.php?id=338759
+#EXTINF:-1 tvg-name="神探狄仁杰" tvg-logo="https://live.fanmingming.com/tv/神探狄仁杰.png" group-title="电视剧",神探狄仁杰
+http://maomao.kandiantv.cn/douyu1.php?id=3395113
 #EXTINF:-1 tvg-name="NewTV爱情喜剧" tvg-logo="https://live.fanmingming.com/tv/NewTV爱情喜剧.png" group-title="未来电视",NewTV爱情喜剧
 http://[2409:8087:1a01:df::7005]/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225669/index.m3u8
 #EXTINF:-1 tvg-name="NewTV超级综艺" tvg-logo="https://live.fanmingming.com/tv/NewTV超级综艺.png" group-title="未来电视",NewTV超级综艺
