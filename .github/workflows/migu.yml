@@ -1,0 +1,29 @@
+name: modify
+on: 
+ # schedule: 
+ #   - cron: 56 22 * * *
+  workflow_dispatch:
+jobs:
+  main:
+    name: Fetch And Modify
+    runs-on: ubuntu-latest
+    steps: 
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: fetch source 
+      run: |
+          wget https://smart.pendy.dpdns.org/m3u/merged_judy.m3u -O miguraw.m3u
+          python extract_migu_lines.py 
+          python deduplicate_migu.py
+          ls -al
+    - name: CommitAndPush
+      run: |
+        git clone https://github.com/ioptu/t2mjdwkjndw3.git
+        cd t2mjdwkjndw3 && git init
+        mv ../migu.m3u ./migu.m3u
+        git config --global user.email "github@github.com"
+        git config --global user.name "Github Actions"
+        git add .
+        git commit -m "Build By Github Actions"
+        git remote set-url origin https://${{ secrets.TOKEN }}@github.com/ioptu/t2mjdwkjndw3.git
+        git push -u origin main
