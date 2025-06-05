@@ -1,21 +1,34 @@
 import requests
 import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from urllib.parse import urljoin
 import time
-from tqdm import tqdm  # pip install tqdm
-import logging
+import threading
+from urllib.parse import urljoin
 
-# 配置日志
-logging.basicConfig(filename='errors.log', level=logging.WARNING, format='%(asctime)s - %(message)s')
+# 限速配置
+lock = threading.Lock()
+request_timestamps = []
+REQUESTS_PER_SECOND = 5  # 每秒最多请求数
 
-def get_final_url(url, max_redirects=10, connect_timeout=3, read_timeout=5, retries=3, delay=0.2):
+def rate_limited():
+    """控制请求速率，避免过快访问目标网站"""
+    with lock:
+        now = time.time()
+        while request_timestamps and now - request_timestamps[0] > 1:
+            request_timestamps.pop(0)
+        if len(request_timestamps) >= REQUESTS_PER_SECOND:
+            wait_time = 1 - (now - request_timestamps[0])
+            time.sleep(wait_time)
+        request_timestamps.append(time.time())
+
+def get_final_url(url, max_redirects=10, timeout=5, retries=3, retry_delay=1):
     """
-    获取 URL 的最终重定向地址，支持失败重试与限速控制。
+    获取 URL 的最终重定向地址，支持失败重试与节流
     """
     for attempt in range(1, retries + 1):
         try:
-            response = requests.get(url, allow_redirects=False, timeout=(connect_timeout, read_timeout))
+            rate_limited()
+            response = requests.get(url, allow_redirects=False, timeout=timeout)
             redirect_count = 0
 
             while redirect_count < max_redirects:
@@ -24,24 +37,23 @@ def get_final_url(url, max_redirects=10, connect_timeout=3, read_timeout=5, retr
                     if not new_url.startswith(('http://', 'https://')):
                         new_url = urljoin(url, new_url)
                     url = new_url
-                    response = requests.get(url, allow_redirects=False, timeout=(connect_timeout, read_timeout))
+                    rate_limited()
+                    response = requests.get(url, allow_redirects=False, timeout=timeout)
                     redirect_count += 1
                 else:
                     break
-
-            if delay > 0:
-                time.sleep(delay)
             return url
 
         except requests.RequestException as e:
-            if attempt == retries:
-                logging.warning(f"请求失败 [{url}] (第 {attempt} 次): {e}")
-                return url  # 失败时返回原始 URL
-            time.sleep(delay)  # 等待后重试
+            print(f"⚠️ 第 {attempt} 次请求失败: {url} ({type(e).__name__}: {e})")
+            if attempt < retries:
+                time.sleep(retry_delay)
+            else:
+                return url  # 最后一次失败，返回原始 URL
 
-def process_m3u_file(input_file, output_file, max_workers=10, connect_timeout=3, read_timeout=5, delay=0.2):
+def process_m3u_file(input_file, output_file, max_workers=10, timeout=5, retries=3, retry_delay=1):
     """
-    处理 M3U 文件，多线程、限速、重试、错误日志等增强功能。
+    多线程处理 M3U 文件，支持限速与重试
     """
     start_time = time.time()
 
@@ -49,38 +61,31 @@ def process_m3u_file(input_file, output_file, max_workers=10, connect_timeout=3,
         lines = [line.strip() for line in f.readlines()]
 
     url_pattern = re.compile(r'^https?://\S+')
-    url_tasks = []
 
-    # 准备任务
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         futures = {}
         for i, line in enumerate(lines):
             if url_pattern.match(line):
-                future = executor.submit(
-                    get_final_url,
-                    line,
-                    max_redirects=10,
-                    connect_timeout=connect_timeout,
-                    read_timeout=read_timeout,
-                    retries=3,
-                    delay=delay
-                )
+                future = executor.submit(get_final_url, line, 10, timeout, retries, retry_delay)
                 futures[future] = i
 
-        # 显示进度
-        for future in tqdm(as_completed(futures), total=len(futures), desc="🔁 正在处理链接"):
-            i = futures[future]
-            lines[i] = future.result()
+        for future in as_completed(futures):
+            line_num = futures[future]
+            final_url = future.result()
+            lines[line_num] = final_url
+            print(f"✅ 处理完成: {final_url}")
 
     with open(output_file, 'w', encoding='utf-8') as f:
         f.write('\n'.join(lines))
 
-    print(f"\n✅ 所有链接处理完成，耗时 {time.time() - start_time:.2f} 秒")
-    print(f"输出文件: {output_file}")
-    print(f"如有错误记录，请查看 errors.log")
+    print(f"\n🎉 处理完成！耗时 {time.time() - start_time:.2f} 秒")
+    print(f"原始文件: {input_file} → 输出文件: {output_file}")
 
-# 使用示例
 if __name__ == "__main__":
     input_m3u = "migu.m3u"
     output_m3u = "final.m3u"
-    process_m3u_file(input_m3u, output_m3u, max_workers=5, connect_timeout=5, read_timeout=5, delay=0.3)
+    process_m3u_file(input_m3u, output_m3u,
+                     max_workers=5,
+                     timeout=10,
+                     retries=3,
+                     retry_delay=1)  # 设置每次重试间隔 2 秒
