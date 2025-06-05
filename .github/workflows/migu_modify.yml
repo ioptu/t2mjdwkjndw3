@@ -1,4 +1,4 @@
-name: migu
+name: migu_md
 on: 
   schedule: 
     - cron: 56 23 * * *
