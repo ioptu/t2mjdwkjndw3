@@ -16,7 +16,7 @@ jobs:
           #pip install tqdm
           python modify_migu.py
           ls -al
-          cat errors.log
+          #cat errors.log
     - name: CommitAndPush
       run: |
         git clone https://github.com/ioptu/t2mjdwkjndw3.git
