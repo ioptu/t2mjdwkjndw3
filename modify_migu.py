@@ -5,13 +5,6 @@ import time
 from urllib.parse import urljoin
 
 def get_final_url(url, max_redirects=10, timeout=5):
-    """
-    获取 URL 的最终重定向地址
-    :param url: 原始 URL
-    :param max_redirects: 最大重定向次数
-    :param timeout: 超时时间
-    :return: 最终 URL 或 None（如果失败）
-    """
     try:
         response = requests.get(url, allow_redirects=False, timeout=timeout)
         redirect_count = 0
@@ -30,12 +23,9 @@ def get_final_url(url, max_redirects=10, timeout=5):
         return url
     except requests.RequestException as e:
         print(f"⚠️ 请求失败: {url} ({type(e).__name__}: {e})")
-        return None  # 失败时返回 None
+        return None
 
 def resolve_urls(lines, url_pattern, max_workers=10, timeout=5):
-    """
-    多线程解析 URL 并返回新的行内容和失败的 URL 映射
-    """
     new_lines = lines[:]
     failed = {}
 
@@ -58,7 +48,7 @@ def resolve_urls(lines, url_pattern, max_workers=10, timeout=5):
 
     return new_lines, failed
 
-def process_m3u_file(input_file, output_file, max_workers=10, timeout=5):
+def process_m3u_file(input_file, output_file, max_workers=10, timeout=5, max_retries=3):
     start_time = time.time()
 
     with open(input_file, 'r', encoding='utf-8') as f:
@@ -66,29 +56,29 @@ def process_m3u_file(input_file, output_file, max_workers=10, timeout=5):
 
     url_pattern = re.compile(r'^https?://\S+')
 
-    # 初次请求
     lines, failed = resolve_urls(lines, url_pattern, max_workers, timeout)
 
-    # 循环重试失败的请求，直到没有失败为止
-    retry_count = 10
-    while failed:
+    retry_count = 0
+    while failed and retry_count < max_retries:
         retry_count += 1
-        print(f"\n🔁 第 {retry_count} 次重试中，共 {len(failed)} 个失败请求...")
+        print(f"\n🔁 第 {retry_count} 次重试，共 {len(failed)} 个失败请求...")
         time.sleep(10)
 
-        # 准备 retry_lines，仅替换 failed 部分
         retry_lines = [failed[i] if i in failed else '' for i in range(len(lines))]
         retry_result, retry_failed = resolve_urls(retry_lines, url_pattern, max_workers, timeout)
 
-        # 合并 retry_result 到主 lines 中
         for i in failed:
             if retry_result[i]:
                 lines[i] = retry_result[i]
 
-        # 更新失败记录
         failed = {i: failed[i] for i in failed if retry_result[i] is None}
 
-    # 写入最终文件
+    if failed:
+        print(f"\n⚠️ 以下 {len(failed)} 个请求在重试 {max_retries} 次后仍失败，将保留原始链接：")
+        for idx, url in failed.items():
+            lines[idx] = url
+            print(f" - {url}")
+
     with open(output_file, 'w', encoding='utf-8') as f:
         f.write('\n'.join(lines))
 
@@ -99,4 +89,4 @@ def process_m3u_file(input_file, output_file, max_workers=10, timeout=5):
 if __name__ == "__main__":
     input_m3u = "migu.m3u"
     output_m3u = "final.m3u"
-    process_m3u_file(input_m3u, output_m3u, max_workers=5, timeout=10)
+    process_m3u_file(input_m3u, output_m3u, max_workers=5, timeout=10, max_retries=6)
