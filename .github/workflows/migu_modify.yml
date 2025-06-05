@@ -1,0 +1,27 @@
+name: migu
+on: 
+  schedule: 
+    - cron: 56 23 * * *
+  workflow_dispatch:
+jobs:
+  main:
+    name: Fetch And Modify
+    runs-on: ubuntu-latest
+    steps: 
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: fetch source 
+      run: |
+          python modify_migu.py
+          ls -al
+    - name: CommitAndPush
+      run: |
+        git clone https://github.com/ioptu/t2mjdwkjndw3.git
+        cd t2mjdwkjndw3 && git init
+        mv ../final.m3u ./mdmigu.m3u
+        git config --global user.email "github@github.com"
+        git config --global user.name "Github Actions"
+        git add .
+        git commit -m "Build By Github Actions"
+        git remote set-url origin https://${{ secrets.TOKEN }}@github.com/ioptu/t2mjdwkjndw3.git
+        git push -u origin main
