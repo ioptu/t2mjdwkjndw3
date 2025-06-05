@@ -12,7 +12,7 @@ jobs:
       uses: actions/checkout@v4
     - name: fetch source 
       run: |
-          pip install requests
+          pip install requests tqdm
           python modify_migu.py
           ls -al
     - name: CommitAndPush
