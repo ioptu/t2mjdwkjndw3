@@ -12,7 +12,8 @@ jobs:
       uses: actions/checkout@v4
     - name: fetch source 
       run: |
-          pip install requests tqdm
+          pip install requests 
+          #pip install tqdm
           python modify_migu.py
           ls -al
           cat errors.log
