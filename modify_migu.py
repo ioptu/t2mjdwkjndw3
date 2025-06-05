@@ -76,4 +76,4 @@ def process_m3u_file(input_file, output_file, max_workers=10, timeout=5):
 if __name__ == "__main__":
     input_m3u = "migu.m3u"    # 输入文件路径
     output_m3u = "final.m3u"      # 输出文件路径
-    process_m3u_file(input_m3u, output_m3u, max_workers=20, timeout=10)
+    process_m3u_file(input_m3u, output_m3u, max_workers=5, timeout=10)
