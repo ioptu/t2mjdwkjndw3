@@ -1,7 +1,7 @@
 name: migu_md
 on: 
   schedule: 
-    - cron: 29 */2 * * *
+    - cron: 29 * * * *
   workflow_dispatch:
 jobs:
   main:
