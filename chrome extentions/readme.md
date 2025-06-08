@@ -10,4 +10,4 @@ https://learn.microsoft.com/zh-cn/deployedge/microsoft-edge-manage-extensions-po
 
 
 ## http
-一些http开头的源播放失败可能与自动使用https有关，关闭自动使用https, disable HTTPS Upgrades 
+一些http开头的源播放失败可能与自动使用https有关，关闭浏览器的自动使用https功能, disable HTTPS Upgrades 
