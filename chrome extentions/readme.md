@@ -1,5 +1,6 @@
+一般打开"开发者模式"后，"加载已解压的扩展"即可。
 
-
+## 离线安装crx
 https://www.chromium.org/administrators/policy-templates/   #组策略模板 chrome
 
 https://aka.ms/EdgeEnterprise   #组策略模板 edge
