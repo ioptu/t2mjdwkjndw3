@@ -1,0 +1,30 @@
+name: qwt-finurl
+on: 
+#  schedule: 
+#    - cron: 30 * * * *
+  workflow_dispatch:
+jobs:
+  main:
+    name: Fetch And Modify
+    runs-on: ubuntu-latest
+    steps: 
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: fetch source 
+      run: |
+          pip install requests 
+          #pip install tqdm
+          python rdfinurl.py --input qwt.m3u --output fuqwt.m3u
+          ls -al
+          #cat errors.log
+    - name: CommitAndPush
+      run: |
+        git clone https://github.com/ioptu/t2mjdwkjndw3.git
+        cd t2mjdwkjndw3 && git init
+        mv ../fuqwt.m3u ./fuqwt.m3u
+        git config --global user.email "github@github.com"
+        git config --global user.name "Github Actions"
+        git add .
+        git commit -m "Build By Github Actions"
+        git remote set-url origin https://${{ secrets.TOKEN }}@github.com/ioptu/t2mjdwkjndw3.git
+        git push -u origin main
