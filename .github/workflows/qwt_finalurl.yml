@@ -14,14 +14,14 @@ jobs:
       run: |
           pip install requests 
           #pip install tqdm
-          python rdfinurl.py --input qwt.m3u --output fuqwt.m3u --workers 5 --timeout 10 --retries 5
+          python modify_qwt.py
           ls -al
           #cat errors.log
     - name: CommitAndPush
       run: |
         git clone https://github.com/ioptu/t2mjdwkjndw3.git
         cd t2mjdwkjndw3 && git init
-        mv ../fuqwt.m3u ./fuqwt.m3u
+        mv ../final.m3u ./fuqwt.m3u
         git config --global user.email "github@github.com"
         git config --global user.name "Github Actions"
         git add .
