@@ -11,7 +11,7 @@ def get_final_url(url, max_redirects=10, timeout=5):
     获取 URL 的最终重定向地址
     """
     try:
-        response = requests.get(url, allow_redirects=False, timeout=timeout)
+        response = requests.head(url, allow_redirects=False, timeout=timeout)
         redirect_count = 0
         
         while redirect_count < max_redirects:
@@ -20,7 +20,7 @@ def get_final_url(url, max_redirects=10, timeout=5):
                 if not new_url.startswith(('http://', 'https://')):
                     new_url = urljoin(url, new_url)
                 url = new_url
-                response = requests.get(url, allow_redirects=False, timeout=timeout)
+                response = requests.head(url, allow_redirects=False, timeout=timeout)
                 redirect_count += 1
             else:
                 break
