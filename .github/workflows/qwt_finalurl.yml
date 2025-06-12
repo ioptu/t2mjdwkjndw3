@@ -1,7 +1,7 @@
 name: qwt-finurl
 on: 
-#  schedule: 
-#    - cron: 30 * * * *
+  schedule: 
+    - cron: 30 12 * * *
   workflow_dispatch:
 jobs:
   main:
