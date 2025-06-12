@@ -1,4 +1,4 @@
-name: quwangtong
+name: qwt
 on: 
   schedule: 
     - cron: 56 10 * * *
