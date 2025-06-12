@@ -13,10 +13,19 @@ def extract_keyword_lines(filepath, keyword):
     result = []
     i = 0
     while i < len(lines) - 1:
-        if keyword in lines[i]:
-            result.append(lines[i].strip())
+        line = lines[i]
+        # 支持 && 和 || 逻辑
+        if "&&" in keyword:
+            match = all(k.strip() in line for k in keyword.split("&&"))
+        elif "||" in keyword:
+            match = any(k.strip() in line for k in keyword.split("||"))
+        else:
+            match = keyword in line
+        
+        if match:
+            result.append(line.strip())
             result.append(lines[i + 1].strip())
-            result.append("")  # 空行分隔
+            result.append("")
             i += 2
         else:
             i += 1
