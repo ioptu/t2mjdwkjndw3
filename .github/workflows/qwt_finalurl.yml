@@ -1,7 +1,7 @@
 name: qwt-finurl
 on: 
   schedule: 
-    - cron: 30 12 * * *
+    - cron: 30 * * * *
   workflow_dispatch:
 jobs:
   main:
@@ -16,7 +16,7 @@ jobs:
       run: |
           pip install requests 
           #pip install tqdm
-          python rdfinurlhead.py --input qwt.m3u --output fuqwt.m3u
+          python rdfinurlhead.py --input qwt.m3u --output fuqwt.m3u --retries 2
           ls -al
           #cat errors.log
     - name: CommitAndPush
