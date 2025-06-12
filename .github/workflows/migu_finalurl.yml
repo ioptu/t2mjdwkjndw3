@@ -1,11 +1,11 @@
-name: migu_md
+name: migu_finurl
 on: 
 #  schedule: 
 #    - cron: 30 * * * *
   workflow_dispatch:
 jobs:
   main:
-    name: Fetch And Modify
+    name: Modify
     runs-on: ubuntu-latest
     steps: 
     - name: Checkout code
