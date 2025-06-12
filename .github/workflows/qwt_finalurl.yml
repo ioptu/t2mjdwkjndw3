@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 jobs:
   main:
-    name: Fetch And Modify
+    name: Modify
     runs-on: ubuntu-latest
     steps: 
     - name: Checkout code
