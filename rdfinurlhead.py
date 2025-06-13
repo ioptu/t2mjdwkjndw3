@@ -8,27 +8,45 @@ import argparse
 
 def get_final_url(url, max_redirects=10, timeout=5):
     """
-    获取 URL 的最终重定向地址
+    获取 URL 的最终重定向地址，并在获取到响应头后检查 Content-Type。
+    如果检测到视频内容，则中止下载响应体。
     """
+    current_url = url
+    redirect_count = 0
+
     try:
-        response = requests.head(url, allow_redirects=False, timeout=timeout)
-        redirect_count = 0
-        
         while redirect_count < max_redirects:
+            # 初始请求，allow_redirects=False 来手动处理重定向
+            response = requests.get(current_url, allow_redirects=False, timeout=timeout, stream=True) # stream=True 关键
+            response.raise_for_status() # 检查HTTP状态码，如果不是2xx，则抛出异常
+
             if response.status_code in (301, 302, 303, 307, 308) and 'Location' in response.headers:
                 new_url = response.headers['Location']
                 if not new_url.startswith(('http://', 'https://')):
-                    new_url = urljoin(url, new_url)
-                url = new_url
-                response = requests.head(url, allow_redirects=False, timeout=timeout)
+                    new_url = urljoin(current_url, new_url)
+                current_url = new_url
                 redirect_count += 1
+                # 在重定向时关闭当前响应的连接
+                response.close()
             else:
-                break
-        
-        return url, True
-    except requests.RequestException as e:
-        print(f"⚠️ 请求失败: {url} ({type(e).__name__}: {e})")
-        return url, False
+                # 到达最终URL，或者不再重定向
+                final_url = current_url
+                content_type = response.headers.get('Content-Type', '').lower()
+                print(f"最终URL: {final_url}")
+                print(f"Content-Type: {content_type}")
+
+                if 'video/' in content_type or 'application/octet-stream' in content_type: # 某些FLV可能没有明确的video/flv
+                    print("检测到视频内容，中止响应体下载。")
+                    response.close() # 立即关闭连接，中止下载
+                    return final_url, True, True # 返回最终URL，成功，是视频
+                else:
+                    # 如果不是视频，你可以选择继续处理响应体，或者直接关闭
+                    response.close() # 如果不需要响应体内容，也可以直接关闭
+                    return final_url, True, False # 返回最终URL，成功，不是视频
+
+    except requests.exceptions.RequestException as e:
+        print(f"⚠️ 请求失败: {current_url} ({type(e).__name__}: {e})")
+        return current_url, False, False # 返回当前URL，失败，不是视频
 
 def resolve_urls_with_retry(urls, max_workers=10, timeout=5, max_retries=3, delay_between_retries=10):
     """
