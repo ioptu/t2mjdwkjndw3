@@ -16,7 +16,7 @@ jobs:
       run: |
           pip install requests 
           #pip install tqdm
-          python ./scripts/rdfinurl.py --input qwt.m3u --output fuqwt.m3u --retries 2
+          python ./scripts/rdfinurl.py --input qwt.m3u --output final.m3u --retries 2
           ls -al
           #cat errors.log
     - name: CommitAndPush
@@ -31,7 +31,7 @@ jobs:
         cd "$REPO_NAME" || exit 1  # 强制失败时退出
 
         # 后续操作...
-        mv ../fuqwt.m3u ./fuqwt.m3u
+        mv ../final.m3u ./qwt_rd.m3u
         git add .
         git commit -m "Update: $(date +'%Y-%m-%d %H:%M:%S')"
         git push origin main
