@@ -16,7 +16,7 @@ jobs:
       run: |
           pip install requests 
           #pip install tqdm
-          python rdfinurlget.py --input migu.m3u --output final.m3u
+          python rdfinurlhead.py --input migu.m3u --output final.m3u --retries 2
           ls -al
           #cat errors.log
     - name: CommitAndPush
