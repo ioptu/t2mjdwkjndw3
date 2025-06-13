@@ -1,7 +1,7 @@
 name: qwt
 on: 
   schedule: 
-    - cron: 56 10 * * *
+    - cron: 00 10 * * *
   workflow_dispatch:
 jobs:
   main:
