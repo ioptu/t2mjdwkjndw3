@@ -15,7 +15,7 @@ jobs:
     - name: fetch source 
       run: |
           wget https://github.com/zwc456baby/iptv_alive/raw/master/live.txt -O input.txt
-          node txt2m3u.js -i input.txt -o output.m3u
+          node ./scripts/txt2m3u.js -i input.txt -o output.m3u
           ls -al
     - name: CommitAndPush
       run: |
