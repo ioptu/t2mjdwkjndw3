@@ -1,4 +1,4 @@
-下载flvm3u8player_v3-new.zip。
+下载flvm3u8player_v3.zip。
 
 一般打开"开发者模式"后，"加载已解压的扩展"即可。
 
