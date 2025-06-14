@@ -16,7 +16,7 @@ jobs:
       run: |
           wget https://smart.pendy.dpdns.org/m3u/merged_judy.m3u -O raw.m3u
           python ./scripts/extract.py --input raw.m3u --output op.m3u --keyword '咪咕视频'
-          python ./scripts/deduplicate.py -i op.m3u -o migu.m3u
+          python ./scripts/deduplicate.py -i op.m3u -o output.m3u
           ls -al
     - name: CommitAndPush
       run: |
@@ -30,7 +30,7 @@ jobs:
         cd "$REPO_NAME" || exit 1  # 强制失败时退出
 
         # 后续操作...
-        mv ../migu.m3u ./migu.m3u
+        mv ../output.m3u ./migu.m3u
         git add .
         git commit -m "Update: $(date +'%Y-%m-%d %H:%M:%S')"
         git push origin main
