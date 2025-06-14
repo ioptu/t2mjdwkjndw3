@@ -29,6 +29,7 @@ def extract_keyword_lines(filepath, ekeyword=None, ukeyword=None, xkeyword=None)
     """
     从M3U文件中提取包含指定关键字的记录。
     此版本改进了M3U记录的识别，并支持在不同行类型中搜索。
+    同时，它会保留原始文件中匹配记录的顺序，并确保结果不重复。
     :param filepath: 输入文件路径。
     :param ekeyword: 只在 #EXTINF 行中搜索的关键字。
     :param ukeyword: 只在 URL 行中搜索的关键字。
@@ -38,10 +39,10 @@ def extract_keyword_lines(filepath, ekeyword=None, ukeyword=None, xkeyword=None)
     with open(filepath, 'r', encoding='utf-8') as file:
         lines = file.readlines()
 
-    # 使用集合存储唯一的记录对 (EXTINF行, URL行)，以避免重复
-    # 对于 xkeyword 模式，如果同一条记录（EXTINF+URL对）因 EXTINF 行和 URL 行都匹配而多次被发现，
-    # 集合可以确保最终输出中不会有重复的记录对。
-    unique_record_pairs = set()
+    # 使用列表存储匹配到的记录对 (EXTINF行, URL行)，以保留顺序
+    ordered_record_pairs = []
+    # 使用集合辅助去重，存储已添加的记录对，提高查找效率
+    seen_record_pairs = set()
 
     i = 0
     while i < len(lines):
@@ -66,8 +67,11 @@ def extract_keyword_lines(filepath, ekeyword=None, ukeyword=None, xkeyword=None)
                               _check_match(url_line_stripped, xkeyword)
 
                 if matched:
-                    # 如果匹配，将整个记录对（EXTINF行, URL行）添加到集合中
-                    unique_record_pairs.add((current_line_stripped, url_line_stripped))
+                    # 如果匹配，且该记录对尚未被添加过
+                    current_pair = (current_line_stripped, url_line_stripped)
+                    if current_pair not in seen_record_pairs:
+                        ordered_record_pairs.append(current_pair)
+                        seen_record_pairs.add(current_pair)
 
                 i += 2  # 处理完 #EXTINF 和 URL 两行，跳到下一条记录的开始
             else:
@@ -79,9 +83,9 @@ def extract_keyword_lines(filepath, ekeyword=None, ukeyword=None, xkeyword=None)
             # 我们只关注 #EXTINF 后面跟着 URL 的标准 M3U 格式
             i += 1
 
-    # 将集合中的唯一记录对转换回列表格式，每条记录包括 EXTINF行、URL行 和一个空行
+    # 将有序且去重后的记录对转换回列表格式，每条记录包括 EXTINF行、URL行 和一个空行
     result = []
-    for extinf_line, url_line in unique_record_pairs:
+    for extinf_line, url_line in ordered_record_pairs:
         result.append(extinf_line)
         result.append(url_line)
         result.append("") # 每条记录后添加一个空行，保持原有的输出格式
