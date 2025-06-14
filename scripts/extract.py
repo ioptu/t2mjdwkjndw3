@@ -25,7 +25,8 @@ def _check_match(text, keyword_str):
         # 简单匹配：只要包含关键字即可
         return processed_keyword in text
 
-def extract_keyword_lines(filepath, ekeyword=None, ukeyword=None, xkeyword=None):
+def extract_keyword_lines(filepath, ekeyword=None, ukeyword=None, xkeyword=None,
+                          extinf_and_url_keywords=None, extinf_or_url_keywords=None):
     """
     从M3U文件中提取包含指定关键字的记录。
     此版本改进了M3U记录的识别，并支持在不同行类型中搜索。
@@ -34,6 +35,8 @@ def extract_keyword_lines(filepath, ekeyword=None, ukeyword=None, xkeyword=None)
     :param ekeyword: 只在 #EXTINF 行中搜索的关键字。
     :param ukeyword: 只在 URL 行中搜索的关键字。
     :param xkeyword: 在 #EXTINF 和 URL 行中同时搜索的关键字。
+    :param extinf_and_url_keywords: 逗号分隔的两个关键字，EXTINF行和URL行需同时包含对应关键字。
+    :param extinf_or_url_keywords: 逗号分隔的两个关键字，EXTINF行或URL行包含对应关键字。
     :return: 包含匹配记录的列表。
     """
     with open(filepath, 'r', encoding='utf-8') as file:
@@ -43,6 +46,25 @@ def extract_keyword_lines(filepath, ekeyword=None, ukeyword=None, xkeyword=None)
     ordered_record_pairs = []
     # 使用集合辅助去重，存储已添加的记录对，提高查找效率
     seen_record_pairs = set()
+
+    # 解析组合关键字参数
+    kw1_and_kw2 = None
+    if extinf_and_url_keywords:
+        parts = [k.strip() for k in extinf_and_url_keywords.split(',')]
+        if len(parts) == 2:
+            kw1_and_kw2 = (parts[0], parts[1])
+        else:
+            print("错误：--eandu 参数需要两个用逗号分隔的关键字。")
+            return []
+
+    kw1_or_kw2 = None
+    if extinf_or_url_keywords:
+        parts = [k.strip() for k in extinf_or_url_keywords.split(',')]
+        if len(parts) == 2:
+            kw1_or_kw2 = (parts[0], parts[1])
+        else:
+            print("错误：--eoru 参数需要两个用逗号分隔的关键字。")
+            return []
 
     i = 0
     while i < len(lines):
@@ -65,6 +87,14 @@ def extract_keyword_lines(filepath, ekeyword=None, ukeyword=None, xkeyword=None)
                     # 在 EXTINF 或 URL 行中搜索 (任一匹配即可)
                     matched = _check_match(current_line_stripped, xkeyword) or \
                               _check_match(url_line_stripped, xkeyword)
+                elif kw1_and_kw2:
+                    # EXTINF 包含 kw1 且 URL 包含 kw2
+                    matched = _check_match(current_line_stripped, kw1_and_kw2[0]) and \
+                              _check_match(url_line_stripped, kw1_and_kw2[1])
+                elif kw1_or_kw2:
+                    # EXTINF 包含 kw1 或 URL 包含 kw2
+                    matched = _check_match(current_line_stripped, kw1_or_kw2[0]) or \
+                              _check_match(url_line_stripped, kw1_or_kw2[1])
 
                 if matched:
                     # 如果匹配，且该记录对尚未被添加过
@@ -95,7 +125,7 @@ def extract_keyword_lines(filepath, ekeyword=None, ukeyword=None, xkeyword=None)
 def parse_arguments():
     """
     解析命令行参数。
-    支持通过 --ekeyword, --ukeyword, --xkeyword 选择不同的搜索范围。
+    支持通过 --ekeyword, --ukeyword, --xkeyword, --eandu, --eoru 选择不同的搜索范围。
     这些参数是互斥的，且必须提供其中一个。
     """
     parser = argparse.ArgumentParser(description='从M3U文件中提取包含指定关键字的记录')
@@ -107,6 +137,8 @@ def parse_arguments():
     group.add_argument('--ekeyword', help='在 #EXTINF 行中搜索的关键字（可含双引号，支持 && 和 || 逻辑）')
     group.add_argument('--ukeyword', help='在 URL 行中搜索的关键字（可含双引号，支持 && 和 || 逻辑）')
     group.add_argument('--xkeyword', help='在 #EXTINF 和 URL 行中同时搜索的关键字（可含双引号，支持 && 和 || 逻辑）')
+    group.add_argument('--eandu', dest='extinf_and_url_keywords', help='EXTINF行包含Keyword1且URL行包含Keyword2（格式："Keyword1,Keyword2"）')
+    group.add_argument('--eoru', dest='extinf_or_url_keywords', help='EXTINF行包含Keyword1或URL行包含Keyword2（格式："Keyword1,Keyword2"）')
 
     return parser.parse_args()
 
@@ -126,6 +158,12 @@ if __name__ == "__main__":
     elif args.xkeyword:
         extracted_lines = extract_keyword_lines(args.input, xkeyword=args.xkeyword)
         search_keyword_display = f"EXTINF或URL行中的 '{args.xkeyword}'"
+    elif args.extinf_and_url_keywords: # 注意这里要用 dest 指定的参数名
+        extracted_lines = extract_keyword_lines(args.input, extinf_and_url_keywords=args.extinf_and_url_keywords)
+        search_keyword_display = f"EXTINF和URL行组合搜索 '{args.extinf_and_url_keywords}'"
+    elif args.extinf_or_url_keywords: # 注意这里要用 dest 指定的参数名
+        extracted_lines = extract_keyword_lines(args.input, extinf_or_url_keywords=args.extinf_or_url_keywords)
+        search_keyword_display = f"EXTINF或URL行组合搜索 '{args.extinf_or_url_keywords}'"
 
     # 将提取出的行写入输出文件
     with open(args.output, 'w', encoding='utf-8') as f:
