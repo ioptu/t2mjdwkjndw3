@@ -16,7 +16,7 @@ jobs:
       run: |
           wget https://github.com/suxuang/myIPTV/raw/refs/heads/main/ipv4.m3u -O raw.m3u
           python ./scripts/extract.py --input raw.m3u --output op.m3u --keyword 'group-title="全网通"'
-          python ./scripts/deduplicate.py -i op.m3u -o qwt.m3u
+          python ./scripts/deduplicate.py -i op.m3u -o output.m3u
           ls -al
     - name: CommitAndPush
       run: |
@@ -30,7 +30,7 @@ jobs:
         cd "$REPO_NAME" || exit 1  # 强制失败时退出
 
         # 后续操作...
-        mv ../qwt.m3u ./qwt.m3u
+        mv ../output.m3u ./qwt.m3u
         git add .
         git commit -m "Update: $(date +'%Y-%m-%d %H:%M:%S')"
         git push origin main
