@@ -10,7 +10,7 @@ def get_final_url(url, max_redirects=10, timeout=5):
     """
     获取 URL 的最终重定向地址
     很多服务器不支持request.head
-    因此采用request.head
+    因此采用request.get
     """
     try:
         response = requests.get(url, allow_redirects=False, timeout=timeout)
