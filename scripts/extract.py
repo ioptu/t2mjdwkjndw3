@@ -25,16 +25,12 @@ def _check_match(text, keyword_str):
         # 简单匹配：只要包含关键字即可
         return processed_keyword in text
 
-def extract_keyword_lines(filepath, ekeyword=None, ukeyword=None, xkeyword=None,
-                          extinf_and_url_keywords=None, extinf_or_url_keywords=None):
+def extract_keyword_lines(filepath, extinf_and_url_keywords=None, extinf_or_url_keywords=None):
     """
     从M3U文件中提取包含指定关键字的记录。
     此版本改进了M3U记录的识别，并支持在不同行类型中搜索。
     同时，它会保留原始文件中匹配记录的顺序，并确保结果不重复。
     :param filepath: 输入文件路径。
-    :param ekeyword: 只在 #EXTINF 行中搜索的关键字。
-    :param ukeyword: 只在 URL 行中搜索的关键字。
-    :param xkeyword: 在 #EXTINF 和 URL 行中同时搜索的关键字。
     :param extinf_and_url_keywords: 逗号分隔的两个关键字，EXTINF行和URL行需同时包含对应关键字。
     :param extinf_or_url_keywords: 逗号分隔的两个关键字，EXTINF行或URL行包含对应关键字。
     :return: 包含匹配记录的列表。
@@ -52,18 +48,34 @@ def extract_keyword_lines(filepath, ekeyword=None, ukeyword=None, xkeyword=None,
     if extinf_and_url_keywords:
         parts = [k.strip() for k in extinf_and_url_keywords.split(',')]
         if len(parts) == 2:
+            if not parts[0] and not parts[1]:
+                print("错误：--eandu 参数的两个关键字不能都为空。请提供有效的搜索关键字。")
+                return []
+            elif not parts[0]:
+                print(f"警告：您使用了 --eandu '{extinf_and_url_keywords}'。EXTINF行关键字为空。在此模式下，EXTINF行不会进行有效匹配，导致结果始终为空。如果您想仅在URL行搜索 '{parts[1]}'，请考虑使用 --eoru ',{parts[1]}'。")
+                return []
+            elif not parts[1]:
+                print(f"警告：您使用了 --eandu '{extinf_and_url_keywords}'。URL行关键字为空。在此模式下，URL行不会进行有效匹配，导致结果始终为空。如果您想仅在EXTINF行搜索 '{parts[0]}'，请考虑使用 --eoru '{parts[0]},'。")
+                return []
             kw1_and_kw2 = (parts[0], parts[1])
         else:
-            print("错误：--eandu 参数需要两个用逗号分隔的关键字。")
+            print("错误：--eandu 参数需要两个用逗号分隔的关键字。例如：'Keyword1,Keyword2'。")
             return []
 
     kw1_or_kw2 = None
     if extinf_or_url_keywords:
         parts = [k.strip() for k in extinf_or_url_keywords.split(',')]
         if len(parts) == 2:
+            if not parts[0] and not parts[1]:
+                print("错误：--eoru 参数的两个关键字不能都为空。请提供有效的搜索关键字。")
+                return []
+            elif not parts[0]:
+                print(f"提示：您使用了 --eoru '{extinf_or_url_keywords}'。EXTINF行关键字为空。这意味着将只在URL行中搜索 '{parts[1]}'。")
+            elif not parts[1]:
+                print(f"提示：您使用了 --eoru '{extinf_or_url_keywords}'。URL行关键字为空。这意味着将只在EXTINF行中搜索 '{parts[0]}'。")
             kw1_or_kw2 = (parts[0], parts[1])
         else:
-            print("错误：--eoru 参数需要两个用逗号分隔的关键字。")
+            print("错误：--eoru 参数需要两个用逗号分隔的关键字。例如：'Keyword1,Keyword2'。")
             return []
 
     i = 0
@@ -77,17 +89,7 @@ def extract_keyword_lines(filepath, ekeyword=None, ukeyword=None, xkeyword=None,
                 url_line_stripped = lines[i+1].strip()
 
                 matched = False
-                if ekeyword:
-                    # 只在 EXTINF 行中搜索
-                    matched = _check_match(current_line_stripped, ekeyword)
-                elif ukeyword:
-                    # 只在 URL 行中搜索
-                    matched = _check_match(url_line_stripped, ukeyword)
-                elif xkeyword:
-                    # 在 EXTINF 或 URL 行中搜索 (任一匹配即可)
-                    matched = _check_match(current_line_stripped, xkeyword) or \
-                              _check_match(url_line_stripped, xkeyword)
-                elif kw1_and_kw2:
+                if kw1_and_kw2:
                     # EXTINF 包含 kw1 且 URL 包含 kw2
                     matched = _check_match(current_line_stripped, kw1_and_kw2[0]) and \
                               _check_match(url_line_stripped, kw1_and_kw2[1])
@@ -125,7 +127,7 @@ def extract_keyword_lines(filepath, ekeyword=None, ukeyword=None, xkeyword=None,
 def parse_arguments():
     """
     解析命令行参数。
-    支持通过 --ekeyword, --ukeyword, --xkeyword, --eandu, --eoru 选择不同的搜索范围。
+    现在只支持 --eandu 和 --eoru 两种组合搜索模式。
     这些参数是互斥的，且必须提供其中一个。
     """
     parser = argparse.ArgumentParser(description='从M3U文件中提取包含指定关键字的记录')
@@ -134,9 +136,6 @@ def parse_arguments():
 
     # 创建一个互斥组，用户只能选择其中一个关键字参数
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('--ekeyword', help='在 #EXTINF 行中搜索的关键字（可含双引号，支持 && 和 || 逻辑）')
-    group.add_argument('--ukeyword', help='在 URL 行中搜索的关键字（可含双引号，支持 && 和 || 逻辑）')
-    group.add_argument('--xkeyword', help='在 #EXTINF 和 URL 行中同时搜索的关键字（可含双引号，支持 && 和 || 逻辑）')
     group.add_argument('--eandu', dest='extinf_and_url_keywords', help='EXTINF行包含Keyword1且URL行包含Keyword2（格式："Keyword1,Keyword2"）')
     group.add_argument('--eoru', dest='extinf_or_url_keywords', help='EXTINF行包含Keyword1或URL行包含Keyword2（格式："Keyword1,Keyword2"）')
 
@@ -149,19 +148,10 @@ if __name__ == "__main__":
     extracted_lines = []
     search_keyword_display = ""
 
-    if args.ekeyword:
-        extracted_lines = extract_keyword_lines(args.input, ekeyword=args.ekeyword)
-        search_keyword_display = f"EXTINF行中的 '{args.ekeyword}'"
-    elif args.ukeyword:
-        extracted_lines = extract_keyword_lines(args.input, ukeyword=args.ukeyword)
-        search_keyword_display = f"URL行中的 '{args.ukeyword}'"
-    elif args.xkeyword:
-        extracted_lines = extract_keyword_lines(args.input, xkeyword=args.xkeyword)
-        search_keyword_display = f"EXTINF或URL行中的 '{args.xkeyword}'"
-    elif args.extinf_and_url_keywords: # 注意这里要用 dest 指定的参数名
+    if args.extinf_and_url_keywords:
         extracted_lines = extract_keyword_lines(args.input, extinf_and_url_keywords=args.extinf_and_url_keywords)
         search_keyword_display = f"EXTINF和URL行组合搜索 '{args.extinf_and_url_keywords}'"
-    elif args.extinf_or_url_keywords: # 注意这里要用 dest 指定的参数名
+    elif args.extinf_or_url_keywords:
         extracted_lines = extract_keyword_lines(args.input, extinf_or_url_keywords=args.extinf_or_url_keywords)
         search_keyword_display = f"EXTINF或URL行组合搜索 '{args.extinf_or_url_keywords}'"
 
