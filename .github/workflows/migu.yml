@@ -15,7 +15,7 @@ jobs:
     - name: fetch source 
       run: |
           wget https://smart.pendy.dpdns.org/m3u/merged_judy.m3u -O raw.m3u
-          python ./scripts/extract.py --input raw.m3u --output op.m3u --keyword '咪咕视频'
+          python ./scripts/extract.py --input raw.m3u --output op.m3u --eoru '咪咕视频,'
           python ./scripts/deduplicate.py -i op.m3u -o output.m3u
           ls -al
     - name: CommitAndPush
