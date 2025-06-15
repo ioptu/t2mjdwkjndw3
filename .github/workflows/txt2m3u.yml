@@ -1,4 +1,4 @@
-name: t2m
+name: txt2m3u
 on: 
   schedule: 
     - cron: 0 20 * * *
