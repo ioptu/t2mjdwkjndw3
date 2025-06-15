@@ -15,7 +15,7 @@ jobs:
     - name: fetch source 
       run: |
           wget https://github.com/suxuang/myIPTV/raw/refs/heads/main/ipv4.m3u -O raw.m3u
-          python ./scripts/extract.py --input raw.m3u --output op.m3u --xkeyword '全网通'
+          python ./scripts/extract.py --input raw.m3u --output op.m3u --eoru '全网通,全网通'
           python ./scripts/deduplicate.py -i op.m3u -o output.m3u
           ls -al
     - name: CommitAndPush
