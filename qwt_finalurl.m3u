@@ -1,0 +1,27 @@
+#EXTM3U
+#EXTINF:-1 tvg-name="安多卫视" tvg-logo="https://vip.123pan.cn/1814643527/tv/logo/安多卫视.png" group-title="卫视频道",安多卫视
+#http://qwt.zhibotv.top:2016/全网通.php?id=安多卫视
+
+#EXTINF:-1 tvg-name="康巴卫视" tvg-logo="https://vip.123pan.cn/1814643527/tv/logo/康巴卫视.png" group-title="卫视频道",康巴卫视
+#http://qwt.zhibotv.top:2016/全网通.php?id=康巴卫视
+
+#EXTINF:-1 tvg-id="凤凰中文" tvg-name="凤凰中文" tvg-logo="https://live.fanmingming.cn/tv/凤凰卫视中文台.png" group-title="港澳台频道",凤凰中文台HD
+#http://qwt.zhibotv.top:2016/全网通.php?id=凤凰中文台
+
+#EXTINF:-1 tvg-id="凤凰资讯" tvg-name="凤凰资讯" tvg-logo="https://live.fanmingming.cn/tv/凤凰卫视资讯台.png" group-title="港澳台频道",凤凰资讯台HD
+#http://qwt.zhibotv.top:2016/全网通.php?id=凤凰资讯台
+
+#EXTINF:-1 tvg-id="凤凰香港" tvg-name="凤凰香港" tvg-logo="https://live.fanmingming.cn/tv/凤凰卫视香港台.png" group-title="港澳台频道",凤凰香港台HD
+#http://qwt.zhibotv.top:2016/全网通.php?id=凤凰香港台
+
+#EXTINF:-1 tvg-id="TVB无线新闻" tvg-name="无线新闻" tvg-logo="https://live.fanmingming.cn/tv/无线新闻台.png" group-title="港澳台频道",TVB无线新闻（备用）
+#http://qwt.zhibotv.top:2016/全网通.php?id=无线新闻台
+
+#EXTINF:-1 tvg-id="TVB翡翠台" tvg-name="翡翠台" tvg-logo="https://live.fanmingming.cn/tv/翡翠台.png" group-title="港澳台频道",TVB翡翠台（备用）
+#http://qwt.zhibotv.top:2016/全网通.php?id=翡翠台
+
+#EXTINF:-1 tvg-id="中天新闻" tvg-name="中天新闻" tvg-logo="https://gitee.com/suxuang/TVlogo/raw/main/img/CTI2.png" group-title="港澳台频道",中天新闻
+#http://qwt.zhibotv.top:2016/全网通.php?id=中天新闻
+
+#EXTINF:-1 tvg-id="寰宇新闻" tvg-name="寰宇新闻" tvg-logo="https://gitee.com/suxuang/TVlogo/raw/main/img/Global2.png" group-title="港澳台频道",寰宇新闻
+#http://qwt.zhibotv.top:2016/全网通.php?id=寰宇新闻
