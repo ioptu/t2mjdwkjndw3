@@ -30,6 +30,7 @@ def extract_keyword_lines(filepath, extinf_and_url_keywords=None, extinf_or_url_
     从M3U文件中提取包含指定关键字的记录。
     此版本改进了M3U记录的识别，并支持在不同行类型中搜索。
     同时，它会保留原始文件中匹配记录的顺序，并确保结果不重复。
+    EXTINF 行内容和 URL 行内容都一模一样，才会被认为是重复
     :param filepath: 输入文件路径。
     :param extinf_and_url_keywords: 逗号分隔的两个关键字，EXTINF行和URL行需同时包含对应关键字。
     :param extinf_or_url_keywords: 逗号分隔的两个关键字，EXTINF行或URL行包含对应关键字。
