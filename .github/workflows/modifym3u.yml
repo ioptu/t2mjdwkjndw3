@@ -1,0 +1,47 @@
+name: M3u Fetch And Modify
+on: 
+  #schedule: 
+  #  - cron: 00 20 * * *
+  workflow_dispatch:
+jobs:
+  main:
+    name: Fetch And Modify
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # 允许推送代码
+    steps: 
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: fetch and modify
+      run: |
+          pip install requests 
+          
+          wget https://smart.pendy.dpdns.org/m3u/merged_judy.m3u -O 1raw.m3u
+          python ./scripts/extract.py --input 1raw.m3u --output 1op.m3u --eoru '咪咕视频,'
+          python ./scripts/deduplicate.py -i 1op.m3u -o 1output.m3u
+          python ./scripts/rdfinurl.py --input 1output.m3u --output 1final.m3u --retries 2
+          
+          wget https://github.com/suxuang/myIPTV/raw/refs/heads/main/ipv4.m3u -O 2raw.m3u
+          python ./scripts/extract.py --input 2raw.m3u --output 2op.m3u --eoru '全网通,全网通'
+          python ./scripts/deduplicate.py -i 2op.m3u -o 2output.m3u
+          python ./scripts/rdfinurl.py --input 2output.m3u --output 2final.m3u --retries 2
+          
+    - name: CommitAndPush
+      run: |
+        # 获取仓库名称（${VAR#*/} 是 Bash 的字符串操作，去掉 owner/ 前缀）
+        REPO_NAME="${GITHUB_REPOSITORY#*/}"
+        git config --global user.email "github@github.com"
+        git config --global user.name "Github Actions"
+        
+        # 克隆仓库（使用 HTTPS + TOKEN 避免权限问题）
+        git clone "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+        cd "$REPO_NAME" || exit 1  # 强制失败时退出
+
+        # 后续操作...
+        mv ../1output.m3u ./migu.m3u
+        mv ../1final.m3u ./migu_finalurl.m3u
+        mv ../2output.m3u ./qwt.m3u
+        mv ../2final.m3u ./qwt_finalurl.m3u
+        git add .
+        git commit -m "Update: $(date +'%Y-%m-%d %H:%M:%S')"
+        git push origin main
