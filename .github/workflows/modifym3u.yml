@@ -21,7 +21,8 @@ jobs:
           python ./scripts/deduplicate.py -i 1op.m3u -o 1output.m3u
           python ./scripts/rdfinurl.py --input 1output.m3u --output 1final.m3u --retries 2
           
-          wget https://github.com/suxuang/myIPTV/raw/refs/heads/main/ipv4.m3u -O 2raw.m3u
+          #wget https://github.com/suxuang/myIPTV/raw/refs/heads/main/ipv4.m3u -O 2raw.m3u
+          wget https://github.com/suxuang/myIPTV/raw/refs/heads/main/ipv4a.m3u -O 2raw.m3u
           python ./scripts/extract.py --input 2raw.m3u --output 2op.m3u --eoru '全网通,全网通'
           python ./scripts/deduplicate.py -i 2op.m3u -o 2output.m3u
           python ./scripts/rdfinurl.py --input 2output.m3u --output 2final.m3u --retries 2
