@@ -31,6 +31,9 @@ jobs:
           python ./scripts/extract.py --input t2m_output.m3u --output t1op.m3u --eoru ',lnott'
           python ./scripts/deduplicate.py -i t1op.m3u -o t1output.m3u
 
+          python ./scripts/extract.py --input t2m_output.m3u --output t2op.m3u --eoru ',huuc'
+          python ./scripts/deduplicate.py -i t2op.m3u -o t2output.m3u        
+
           
     - name: CommitAndPush
       run: |
@@ -49,6 +52,7 @@ jobs:
         #mv ../2output.m3u ./qwt.m3u
         ##mv ../2final.m3u ./qwt_finalurl.m3u
         mv ../t1output.m3u ./sh.lnott.top.m3u
+        mv ../t2output.m3u ./huuc_ipv6.m3u
         
         git add .
         if git diff --cached --quiet; then
