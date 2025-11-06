@@ -16,7 +16,7 @@ jobs:
       run: |
           ### wget https://github.com/zwc456baby/iptv_alive/raw/master/live.txt -O input.txt
           ## wget https://gitee.com/xxy002/zhiboyuan/raw/master/dsy -O input.txt
-          wget http://www.lyyytv.cn/yt/zhibo/1.txt -O input.txt
+          wget http://www.lyyytv.cn/yt/zhibo/1.txt -O input.txt -t 2
           node ./scripts/txt2m3u.js -i input.txt -o output.m3u
           ls -al
     - name: CommitAndPush
