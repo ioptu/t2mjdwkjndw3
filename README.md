@@ -10,11 +10,11 @@ https://github.com/482349841209/rakuten-m3u-generator/raw/refs/heads/master/outp
 ```
 https://github.com/ioptu/migu_video/raw/refs/heads/main/plutotv.m3u
 ```
-## 浏览器扩展
+## Chrome扩展
 ```
 https://github.com/ioptu/IPTV.txt2m3u.player/raw/refs/heads/main/chrome%20extension/Flv.m3u8.player.zip
 ```
 >
-> [扩展程序简介](https://github.com/ioptu/IPTV.txt2m3u.player/blob/main/chrome%20extension)
+> [扩展简介](https://github.com/ioptu/IPTV.txt2m3u.player/blob/main/chrome%20extension)
 >
 
